@@ -88,6 +88,7 @@ exports.handler = async (event, context) => {
         const sku = productResponse.data.products
         .flatMap(product => product.variants)
         .find(variant => variant.inventory_item_id === Number(inventory_item_id))?.sku;
+        console.log(sku);
         
         if (!sku)  {
             console.error(`SKU not found for inventory_item_id: ${inventory_item_id}`);
