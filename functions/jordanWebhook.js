@@ -72,7 +72,9 @@ exports.handler = async (event, context) => {
           {event.headers['x-shopify-shop-domain'].includes(store.domain.toLowerCase())}
         );
         console.log(triggeringStore);
-        console.log(event.headers);
+        console.log(event);
+        console.log(event.headers['x-shopify-shop-domain']);
+        console.log(event.headers['x-country']);
         
         if (!triggeringStore) {
             console.error('Store not found based on webhook domain');
