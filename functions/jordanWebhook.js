@@ -83,7 +83,7 @@ exports.handler = async (event, context) => {
         }
 
         // Step 2: Fetch SKU for the triggering inventory_item_id
-        const productResponse = await makeApiRequest(`${triggeringStore.adminUrl}/admin/api/2023-10/products.json?fields=variants`, {
+        const productResponse = await makeApiRequest(`${triggeringStore.adminUrl}/admin/api/2024-10/products.json?fields=variants`, {
             auth: { username: triggeringStore.apiKey, password: triggeringStore.password },
         });
 
@@ -103,7 +103,7 @@ exports.handler = async (event, context) => {
         for (const store of stores) {
             if (store.name === triggeringStore.name) continue; // Skip the triggering store
 
-            const storeProductResponse = await makeApiRequest(`${store.adminUrl}/admin/api/2023-10/products.json?fields=variants`, {
+            const storeProductResponse = await makeApiRequest(`${store.adminUrl}/admin/api/2024-10/products.json?fields=variants`, {
                 auth: { username: store.apiKey, password: store.password },
             });
 
@@ -114,7 +114,7 @@ exports.handler = async (event, context) => {
             if (targetInventoryId) {
                 // Update inventory for the current store (excluding the triggering store)
                 await makeApiRequest(
-                    `${store.adminUrl}/admin/api/2023-10/inventory_levels/set.json`,
+                    `${store.adminUrl}/admin/api/2024-10/inventory_levels/set.json`,
                     {
                         method: 'post',
                         auth: { username: store.apiKey, password: store.password },
