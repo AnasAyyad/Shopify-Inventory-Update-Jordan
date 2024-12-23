@@ -5,18 +5,21 @@ require('dotenv').config();
 const stores = [
     { 
         domain: '8b744d-1a.myshopify.com', 
+        locationID:'68260954221',
         apiKey: process.env.VELVETME_API_KEY, 
         password: process.env.VELVETME_API_PASSWORD, 
         adminUrl: 'https://8b744d-1a.myshopify.com'
     },
     { 
         domain: 'b10986-f4.myshopify.com', 
+        locationID:'66852061268',
         apiKey: process.env.ORANGECOW_API_KEY, 
         password: process.env.ORANGECOW_API_PASSWORD, 
         adminUrl: 'https://b10986-f4.myshopify.com'
     },
     { 
         domain: 'cc88f5-f0.myshopify.com', 
+        locationID:'77549502693',
         apiKey: process.env.GIVINGMORE_API_KEY, 
         password: process.env.GIVINGMORE_API_PASSWORD, 
         adminUrl: 'https://cc88f5-f0.myshopify.com'
@@ -136,14 +139,16 @@ exports.handler = async (event, context) => {
                 await makeApiRequest(
                     `${store.adminUrl}/admin/api/2024-10/inventory_levels/set.json`,
                     {
-                        method: 'post',
+                        method: 'POST',
                         auth: { username: store.apiKey, password: store.password },
                         data: {
                             inventory_item_id: targetInventoryId,
-                            available,
+                            available, 
+                            location_id: store.locationID 
                         },
                     }
                 );
+                
                 console.log(`Inventory updated for item ${targetInventoryId} in store ${store.domain}.`);
             }
         }
