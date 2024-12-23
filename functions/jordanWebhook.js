@@ -87,32 +87,47 @@ exports.handler = async (event, context) => {
         });
 
         const sku = productResponse.data.products.flatMap((product) =>
-            product.variants.find((variant) => variant.inventory_item_id === inventory_item_id)?.sku
+            product.variants.find((variant) => variant.inventory_item_id === inventory_item_id)
         )[0];
 
-        if (!sku) {
+        console.log(222,sku);
+        if (sku !== 34)  {
             console.error(`SKU not found for inventory_item_id: ${inventory_item_id}`);
             return {
                 statusCode: 404,
                 body: JSON.stringify({ message: 'SKU not found' })
             };
         }
-        console.log(222,sku);
         
         // Step 3: Update inventory in other stores (excluding the triggering store)
         for (const store of stores) {
             if (store.domain === triggeringStore.domain) continue; // Skip the triggering store
-
+        
             const storeProductResponse = await makeApiRequest(`${store.adminUrl}/admin/api/2024-10/products.json?fields=variants`, {
                 auth: { username: store.apiKey, password: store.password },
             });
-
+        
             const targetInventoryId = storeProductResponse.data.products.flatMap((product) =>
                 product.variants.find((variant) => variant.sku === sku)?.inventory_item_id
             )[0];
-
+        
             if (targetInventoryId) {
-                // Update inventory for the current store (excluding the triggering store)
+                // Fetch current inventory level for the target inventory item
+                const currentInventoryResponse = await makeApiRequest(
+                    `${store.adminUrl}/admin/api/2024-10/inventory_levels.json?inventory_item_ids=${targetInventoryId}`,
+                    {
+                        auth: { username: store.apiKey, password: store.password },
+                    }
+                );
+        
+                const currentInventory = currentInventoryResponse.data.inventory_levels[0]?.available;
+        
+                if (currentInventory === available) {
+                    console.log(`Inventory for item ${targetInventoryId} in store ${store.domain} is already up to date. Skipping update.`);
+                    continue; // Skip update if inventory is already up-to-date
+                }
+        
+                // Update inventory for the current store
                 await makeApiRequest(
                     `${store.adminUrl}/admin/api/2024-10/inventory_levels/set.json`,
                     {
@@ -124,6 +139,7 @@ exports.handler = async (event, context) => {
                         },
                     }
                 );
+                console.log(`Inventory updated for item ${targetInventoryId} in store ${store.domain}.`);
             }
         }
 
