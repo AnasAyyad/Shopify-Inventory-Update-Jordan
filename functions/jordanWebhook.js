@@ -83,7 +83,7 @@ exports.handler = async (event, context) => {
         }
 
         // Step 2: Fetch SKU for the triggering inventory_item_id
-        const productResponse = await makeApiRequest(`${triggeringStore.adminUrl}/admin/api/2024-10/products.json?fields=variants&limit=1000`, {
+        const productResponse = await makeApiRequest(`${triggeringStore.adminUrl}/admin/api/2024-10/products.json?fields=variants&limit=250`, {
             auth: { username: triggeringStore.apiKey, password: triggeringStore.password },
         });
 
@@ -104,7 +104,7 @@ exports.handler = async (event, context) => {
         for (const store of stores) {
             if (store.domain === triggeringStore.domain) continue; // Skip the triggering store
         
-            const storeProductResponse = await makeApiRequest(`${store.adminUrl}/admin/api/2024-10/products.json?fields=variants&limit=1000`, {
+            const storeProductResponse = await makeApiRequest(`${store.adminUrl}/admin/api/2024-10/products.json?fields=variants&limit=250`, {
                 auth: { username: store.apiKey, password: store.password },
             });
         
