@@ -28,10 +28,8 @@ const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 // Function to handle API requests with rate limiting
 const makeApiRequest = async (url, options, retries = 5) => {
     try {
-        console.log('commiting');
-        
+        console.log('commiting',url);
         const response = await axios(url, options);
-        console.log(response);
         
         return response;
     } catch (error) {
@@ -92,7 +90,7 @@ exports.handler = async (event, context) => {
         const sku = productResponse.data.products
         .flatMap(product => product.variants)
         .find(variant => variant.inventory_item_id === Number(inventory_item_id))?.sku;
-        console.log(sku);
+        console.log(101,sku);
         
         if (!sku)  {
             console.error(`SKU not found for inventory_item_id: ${inventory_item_id}`);
@@ -110,9 +108,10 @@ exports.handler = async (event, context) => {
                 auth: { username: store.apiKey, password: store.password },
             });
         
-            const targetInventoryId = storeProductResponse.data.products
-            .flatMap(product =>product.variants)
-            .find(variant => variant.sku === sku)?.inventory_item_id
+            const targetInventoryId = storeProductResponse?.data?.products
+            ?.flatMap(product => product.variants || []) 
+            .find(variant => variant?.sku === sku)?.inventory_item_id;
+        
             
             console.log(222,targetInventoryId);
             
