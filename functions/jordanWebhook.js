@@ -97,9 +97,9 @@ exports.handler = async (event, context) => {
         .find(variant => variant.inventory_item_id === Number(inventory_item_id))?.sku;
         
         if (!sku)  {
-            console.error(`SKU not found for inventory_item_id: ${inventory_item_id}`);
+            console.error(`SKU not found for inventory_item_id: ${inventory_item_id} in ${triggeringStore.name}`);
             return {
-                statusCode: 404,
+                statusCode: 200,
                 body: JSON.stringify({ message: 'SKU not found' })
             };
         }
@@ -129,7 +129,7 @@ exports.handler = async (event, context) => {
                 const currentInventory = currentInventoryResponse.data.inventory_levels[0]?.available;
                 
                 if (currentInventory === available) {
-                    console.log(`Inventory for item ${targetInventoryId} ,Amount ${currentInventory} in store ${store.name} is already up to date. Skipping update.`);
+                    console.log(`Inventory for item ${targetInventoryId} ,Amount ${available} in store ${store.name} is already up to date. Skipping update.`);
                     continue; // Skip update if inventory is already up-to-date
                 }
         
@@ -147,7 +147,7 @@ exports.handler = async (event, context) => {
                     }
                 );
                 
-                console.log(`Inventory updated for item ${targetInventoryId}, Amount: ${currentInventory} in store ${store.name}.`);
+                console.log(`Inventory updated for item ${targetInventoryId}, Amount: ${available} in store ${store.name}.`);
             }
         }
 
