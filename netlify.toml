@@ -1,9 +1,2 @@
 [build]
   functions = "functions"  # Where the serverless functions are stored
-  publish = "/"  # Specify the root for publish directory
-
-  
-[[redirects]]
-  from = "/webhook"
-  to = "/.netlify/functions/webhook"
-  status = 200
