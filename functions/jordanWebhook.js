@@ -86,11 +86,11 @@ exports.handler = async (event, context) => {
             auth: { username: triggeringStore.apiKey, password: triggeringStore.password },
         });
 
-        const sku = productResponse.data.products.flatMap((product) =>
-            product.variants.find((variant) => variant['inventory_item_id'] == inventory_item_id)?.['sku']
-        )[0];
+        const sku = productResponse.data.products
+        .flatMap(product => product.variants)
+        .find(variant => variant.inventory_item_id === Number(inventory_item_id))?.sku;
         
-        console.log(222,sku),productResponse;
+        console.log(222,sku,productResponse);
         if (sku !== 0)  {
             console.error(`SKU not found for inventory_item_id: ${inventory_item_id}`);
             return {
