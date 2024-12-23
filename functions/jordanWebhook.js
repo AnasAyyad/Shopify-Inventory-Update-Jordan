@@ -4,19 +4,19 @@ require('dotenv').config();
 // Store configurations (replace with your store API details)
 const stores = [
     { 
-        name: 'Velvetme', 
+        domain: '8b744d-1a.myshopify.com', 
         apiKey: process.env.VELVETME_API_KEY, 
         password: process.env.VELVETME_API_PASSWORD, 
         adminUrl: 'https://8b744d-1a.myshopify.com'
     },
     { 
-        name: 'OrangeCow', 
+        domain: 'b10986-f4.myshopify.com', 
         apiKey: process.env.ORANGECOW_API_KEY, 
         password: process.env.ORANGECOW_API_PASSWORD, 
         adminUrl: 'https://b10986-f4.myshopify.com'
     },
     { 
-        name: 'Givingmore', 
+        domain: 'cc88f5-f0.myshopify.com', 
         apiKey: process.env.GIVINGMORE_API_KEY, 
         password: process.env.GIVINGMORE_API_PASSWORD, 
         adminUrl: 'https://cc88f5-f0.myshopify.com'
@@ -73,7 +73,7 @@ exports.handler = async (event, context) => {
         const triggeringStore = stores.find((store) =>
           {  console.log(event.headers);
             
-            event.headers['x-shopify-shop-domain'].includes(store.name.toLowerCase())}
+            event.headers['x-shopify-shop-domain'].includes(store.domain.toLowerCase())}
         );
 
         if (!triggeringStore) {
@@ -104,7 +104,7 @@ exports.handler = async (event, context) => {
         
         // Step 3: Update inventory in other stores (excluding the triggering store)
         for (const store of stores) {
-            if (store.name === triggeringStore.name) continue; // Skip the triggering store
+            if (store.domain === triggeringStore.domain) continue; // Skip the triggering store
 
             const storeProductResponse = await makeApiRequest(`${store.adminUrl}/admin/api/2024-10/products.json?fields=variants`, {
                 auth: { username: store.apiKey, password: store.password },
