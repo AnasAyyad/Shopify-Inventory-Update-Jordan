@@ -71,7 +71,7 @@ exports.handler = async (event, context) => {
     try {
         // Step 1: Identify the triggering store
         const triggeringStore = stores.find((store) =>
-          {  console.log(event.headers['x-shopify-shop-domain']);
+          {  console.log(event.headers);
             
             event.headers['x-shopify-shop-domain'].includes(store.name.toLowerCase())}
         );
@@ -100,7 +100,8 @@ exports.handler = async (event, context) => {
                 body: JSON.stringify({ message: 'SKU not found' })
             };
         }
-
+        console.log(sku);
+        
         // Step 3: Update inventory in other stores (excluding the triggering store)
         for (const store of stores) {
             if (store.name === triggeringStore.name) continue; // Skip the triggering store
