@@ -22,6 +22,7 @@ const stores = [
         adminUrl: 'https://cc88f5-f0.myshopify.com'
     }
 ];
+console.log(stores);
 
 // Function to wait for a specific time (in milliseconds)
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
