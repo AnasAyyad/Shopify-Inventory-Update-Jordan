@@ -6,6 +6,7 @@ const stores = [
     { 
         domain: '8b744d-1a.myshopify.com', 
         locationID:'68260954221',
+        name:"Velvet Me",
         apiKey: process.env.VELVETME_API_KEY, 
         password: process.env.VELVETME_API_PASSWORD, 
         adminUrl: 'https://8b744d-1a.myshopify.com'
@@ -13,6 +14,7 @@ const stores = [
     { 
         domain: 'b10986-f4.myshopify.com', 
         locationID:'66852061268',
+        name:"Orange Cow Jordan",
         apiKey: process.env.ORANGECOW_API_KEY, 
         password: process.env.ORANGECOW_API_PASSWORD, 
         adminUrl: 'https://b10986-f4.myshopify.com'
@@ -20,6 +22,7 @@ const stores = [
     { 
         domain: 'cc88f5-f0.myshopify.com', 
         locationID:'77549502693',
+        name:"Giving More Jordan",
         apiKey: process.env.GIVINGMORE_API_KEY, 
         password: process.env.GIVINGMORE_API_PASSWORD, 
         adminUrl: 'https://cc88f5-f0.myshopify.com'
@@ -31,7 +34,6 @@ const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 // Function to handle API requests with rate limiting
 const makeApiRequest = async (url, options, retries = 5) => {
     try {
-        console.log('commiting',url);
         const response = await axios(url, options);
         
         return response;
@@ -93,7 +95,6 @@ exports.handler = async (event, context) => {
         const sku = productResponse.data.products
         .flatMap(product => product.variants)
         .find(variant => variant.inventory_item_id === Number(inventory_item_id))?.sku;
-        console.log(101,sku);
         
         if (!sku)  {
             console.error(`SKU not found for inventory_item_id: ${inventory_item_id}`);
@@ -115,9 +116,7 @@ exports.handler = async (event, context) => {
             ?.flatMap(product => product.variants || []) 
             .find(variant => variant?.sku === sku)?.inventory_item_id;
         
-            
-            console.log(222,targetInventoryId);
-            
+                        
             if (targetInventoryId) {
                 // Fetch current inventory level for the target inventory item
                 const currentInventoryResponse = await makeApiRequest(
@@ -128,10 +127,9 @@ exports.handler = async (event, context) => {
                 );
         
                 const currentInventory = currentInventoryResponse.data.inventory_levels[0]?.available;
-                console.log(333,currentInventory);
                 
                 if (currentInventory === available) {
-                    console.log(`Inventory for item ${targetInventoryId} in store ${store.domain} is already up to date. Skipping update.`);
+                    console.log(`Inventory for item ${targetInventoryId} ,Amount ${currentInventory} in store ${store.name} is already up to date. Skipping update.`);
                     continue; // Skip update if inventory is already up-to-date
                 }
         
@@ -149,7 +147,7 @@ exports.handler = async (event, context) => {
                     }
                 );
                 
-                console.log(`Inventory updated for item ${targetInventoryId} in store ${store.domain}.`);
+                console.log(`Inventory updated for item ${targetInventoryId}, Amount: ${currentInventory} in store ${store.name}.`);
             }
         }
 
