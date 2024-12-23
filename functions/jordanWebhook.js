@@ -46,7 +46,26 @@ const makeApiRequest = async (url, options, retries = 5) => {
 
 // Webhook handler to receive inventory updates
 exports.handler = async (event, context) => {
-    const { inventory_item_id, available } = JSON.parse(event.body);
+    if (!event.body) {
+        console.error('No body in request');
+        return {
+            statusCode: 400,
+            body: JSON.stringify({ message: 'Bad request: no body' })
+        };
+    }
+
+    let data;
+    try {
+        data = JSON.parse(event.body); // Try parsing
+    } catch (error) {
+        console.error('Failed to parse body:', error);
+        return {
+            statusCode: 400,
+            body: JSON.stringify({ message: 'Invalid JSON' })
+        };
+    }
+
+    const { inventory_item_id, available } = data;
 
     try {
         // Step 1: Identify the triggering store
