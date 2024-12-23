@@ -1,4 +1,5 @@
 const axios = require('axios');
+const { log } = require('firebase-functions/logger');
 require('dotenv').config();
 
 // Store configurations (replace with your store API details)
@@ -28,7 +29,11 @@ const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 // Function to handle API requests with rate limiting
 const makeApiRequest = async (url, options, retries = 5) => {
     try {
+        console.log('commiting');
+        
         const response = await axios(url, options);
+        console.log(response);
+        
         return response;
     } catch (error) {
         if (error.response && error.response.status === 429 && retries > 0) {
@@ -110,7 +115,8 @@ exports.handler = async (event, context) => {
             .flatMap(product =>product.variants)
             .find(variant => variant.sku === sku)?.inventory_item_id
             
-        
+            console.log(222,targetInventoryId);
+            
             if (targetInventoryId) {
                 // Fetch current inventory level for the target inventory item
                 const currentInventoryResponse = await makeApiRequest(
@@ -121,7 +127,8 @@ exports.handler = async (event, context) => {
                 );
         
                 const currentInventory = currentInventoryResponse.data.inventory_levels[0]?.available;
-        
+                console.log(333,currentInventory);
+                
                 if (currentInventory === available) {
                     console.log(`Inventory for item ${targetInventoryId} in store ${store.domain} is already up to date. Skipping update.`);
                     continue; // Skip update if inventory is already up-to-date
