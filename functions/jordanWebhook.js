@@ -1,5 +1,4 @@
 const axios = require('axios');
-const { log } = require('firebase-functions/logger');
 require('dotenv').config();
 
 // Store configurations (replace with your store API details)
