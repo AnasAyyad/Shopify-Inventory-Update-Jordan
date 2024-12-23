@@ -22,8 +22,6 @@ const stores = [
         adminUrl: 'https://cc88f5-f0.myshopify.com'
     }
 ];
-console.log(stores);
-
 // Function to wait for a specific time (in milliseconds)
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -74,7 +72,7 @@ exports.handler = async (event, context) => {
           {event.headers['x-shopify-shop-domain'].includes(store.domain.toLowerCase())}
         );
         console.log(triggeringStore);
-        console.log(event.headers['x-shopify-shop-domain']);
+        console.log(event.headers);
         
         if (!triggeringStore) {
             console.error('Store not found based on webhook domain');
