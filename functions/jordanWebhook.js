@@ -87,7 +87,7 @@ exports.handler = async (event, context) => {
         });
 
         const sku = productResponse.data.products.flatMap((product) =>
-            product.variants.find((variant) => variant.inventory_item_id === inventory_item_id)
+            product.variants.find((variant) => variant["inventory_item_id"] === inventory_item_id)['sku']
         )[0];
 
         console.log(222,sku);
