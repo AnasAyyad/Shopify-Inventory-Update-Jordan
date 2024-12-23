@@ -69,11 +69,7 @@ exports.handler = async (event, context) => {
     try {
         // Step 1: Identify the triggering store
         const triggeringStore = stores.find((store) =>
-            
-            {
-              console.log(event.headers['x-shopify-shop-domain'].includes(store.domain.toLowerCase()));
-              store.domain === event.headers['x-shopify-shop-domain']
-        }
+            store.domain === event.headers['x-shopify-shop-domain'] 
         );
         console.log(triggeringStore);
         console.log(event.headers['x-shopify-shop-domain']);
