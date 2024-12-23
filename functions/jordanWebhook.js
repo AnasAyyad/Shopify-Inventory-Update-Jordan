@@ -65,16 +65,14 @@ exports.handler = async (event, context) => {
     }
 
     const { inventory_item_id, available } = data;
-
+    console.log(111,data);
+    
     try {
         // Step 1: Identify the triggering store
         const triggeringStore = stores.find((store) =>
             store.domain === event.headers['x-shopify-shop-domain'] 
         );
-        console.log(triggeringStore);
-        console.log(event.headers['x-shopify-shop-domain']);
-        console.log(event.headers['x-country']);
-        
+
         if (!triggeringStore) {
             console.error('Store not found based on webhook domain');
             return {
@@ -99,7 +97,7 @@ exports.handler = async (event, context) => {
                 body: JSON.stringify({ message: 'SKU not found' })
             };
         }
-        console.log(sku);
+        console.log(222,sku);
         
         // Step 3: Update inventory in other stores (excluding the triggering store)
         for (const store of stores) {
