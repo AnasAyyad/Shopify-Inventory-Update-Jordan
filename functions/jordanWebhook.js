@@ -87,11 +87,11 @@ exports.handler = async (event, context) => {
         });
 
         const sku = productResponse.data.products.flatMap((product) =>
-            product.variants.find((variant) => variant["inventory_item_id"] === inventory_item_id)['sku']
+            product.variants.find((variant) => variant['inventory_item_id'] == inventory_item_id)?.['sku']
         )[0];
-
+        
         console.log(222,sku);
-        if (sku !== 34)  {
+        if (sku !== 0)  {
             console.error(`SKU not found for inventory_item_id: ${inventory_item_id}`);
             return {
                 statusCode: 404,
