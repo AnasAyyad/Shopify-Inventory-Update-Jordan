@@ -65,7 +65,6 @@ exports.handler = async (event, context) => {
     }
 
     const { inventory_item_id, available } = data;
-    console.log(111,data);
     
     try {
         // Step 1: Identify the triggering store
@@ -90,8 +89,7 @@ exports.handler = async (event, context) => {
         .flatMap(product => product.variants)
         .find(variant => variant.inventory_item_id === Number(inventory_item_id))?.sku;
         
-        console.log(222,sku,productResponse);
-        if (sku !== 0)  {
+        if (!sku)  {
             console.error(`SKU not found for inventory_item_id: ${inventory_item_id}`);
             return {
                 statusCode: 404,
@@ -107,9 +105,10 @@ exports.handler = async (event, context) => {
                 auth: { username: store.apiKey, password: store.password },
             });
         
-            const targetInventoryId = storeProductResponse.data.products.flatMap((product) =>
-                product.variants.find((variant) => variant.sku === sku)?.inventory_item_id
-            )[0];
+            const targetInventoryId = storeProductResponse.data.products
+            .flatMap(product =>product.variants)
+            .find(variant => variant.sku === sku)?.inventory_item_id
+            
         
             if (targetInventoryId) {
                 // Fetch current inventory level for the target inventory item
