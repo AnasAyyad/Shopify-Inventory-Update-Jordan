@@ -90,7 +90,7 @@ exports.handler = async (event, context) => {
             product.variants.find((variant) => variant['inventory_item_id'] == inventory_item_id)?.['sku']
         )[0];
         
-        console.log(222,sku);
+        console.log(222,sku),productResponse;
         if (sku !== 0)  {
             console.error(`SKU not found for inventory_item_id: ${inventory_item_id}`);
             return {
