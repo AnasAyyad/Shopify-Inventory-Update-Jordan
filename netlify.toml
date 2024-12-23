@@ -2,8 +2,6 @@
   functions = "netlify/functions"  # Where the serverless functions are stored
   publish = "/"  # Specify the root for publish directory
 
-[[plugins]]
-  package = "@netlify/plugin-functions-core"
   
 [[redirects]]
   from = "/webhook"
