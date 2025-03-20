@@ -19,14 +19,14 @@ const stores = [
         password: process.env.ORANGECOW_API_PASSWORD, 
         adminUrl: 'https://b10986-f4.myshopify.com'
     },
-    // { 
-    //     domain: 'cc88f5-f0.myshopify.com', 
-    //     locationID:'77549502693',
-    //     name:"Giving More Jordan",
-    //     apiKey: process.env.GIVINGMORE_API_KEY, 
-    //     password: process.env.GIVINGMORE_API_PASSWORD, 
-    //     adminUrl: 'https://cc88f5-f0.myshopify.com'
-    // }
+    { 
+        domain: 'cc88f5-f0.myshopify.com', 
+        locationID:'77549502693',
+        name:"Giving More Jordan",
+        apiKey: process.env.GIVINGMORE_API_KEY, 
+        password: process.env.GIVINGMORE_API_PASSWORD, 
+        adminUrl: 'https://cc88f5-f0.myshopify.com'
+    }
 ];
 // Function to wait for a specific time (in milliseconds)
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
