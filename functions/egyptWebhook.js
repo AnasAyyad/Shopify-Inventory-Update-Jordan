@@ -4,45 +4,21 @@ require('dotenv').config();
 // Store configurations (replace with your store API details)
 const stores = [
     { 
-        domain: '8b744d-1a.myshopify.com', 
-        locationID:'68260954221',
-        name:"Velvet Me Jordan",
-        apiKey: process.env.VELVETME_API_KEY, 
-        password: process.env.VELVETME_API_PASSWORD, 
-        adminUrl: 'https://8b744d-1a.myshopify.com'
-    },
-    { 
         domain: 'c596bc-b0.myshopify.com', 
         locationID:'72572305558',
         name:"elevee Egypt",
-        apiKey: process.env.VELVETME_API_KEY, 
-        password: process.env.VELVETME_API_PASSWORD, 
+        apiKey: process.env.ELEVEE_EG_API_KEY, 
+        password: process.env.ELEVEE_EG_API_PASSWORD, 
         adminUrl: 'https://c596bc-b0.admin.shopify.com'
     },
     { 
         domain: 'df0jfy-du.myshopify.com', 
         locationID:'75050778712',
         name:"Velvet Me Egypt",
-        apiKey: process.env.VELVETME_API_KEY, 
-        password: process.env.VELVETME_API_PASSWORD, 
+        apiKey: process.env.VELVETME_EG_API_KEY, 
+        password: process.env.VELVETME_EG_API_PASSWORD, 
         adminUrl: 'https://df0jfy-du.myshopify.com'
     },
-    { 
-        domain: 'b10986-f4.myshopify.com', 
-        locationID:'66852061268',
-        name:"Orange Cow Jordan",
-        apiKey: process.env.ORANGECOW_API_KEY, 
-        password: process.env.ORANGECOW_API_PASSWORD, 
-        adminUrl: 'https://b10986-f4.myshopify.com'
-    },
-    { 
-        domain: 'cc88f5-f0.myshopify.com', 
-        locationID:'77549502693',
-        name:"elevee Jordan",
-        apiKey: process.env.GIVINGMORE_API_KEY, 
-        password: process.env.GIVINGMORE_API_PASSWORD, 
-        adminUrl: 'https://cc88f5-f0.myshopify.com'
-    }
 ];
 // Function to wait for a specific time (in milliseconds)
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
