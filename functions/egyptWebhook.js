@@ -17,7 +17,7 @@ const stores = [
         name:"Velvet Me Egypt",
         apiKey: process.env.VELVETME_EG_API_KEY, 
         password: process.env.VELVETME_EG_API_PASSWORD, 
-        adminUrl: 'https://df0jfy-du.myshopify.com'
+        adminUrl: 'https://df0jfy-du.admin.myshopify.com'
     },
 ];
 // Function to wait for a specific time (in milliseconds)

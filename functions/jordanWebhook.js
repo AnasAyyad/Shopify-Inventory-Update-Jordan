@@ -12,22 +12,6 @@ const stores = [
         adminUrl: 'https://8b744d-1a.myshopify.com'
     },
     { 
-        domain: 'c596bc-b0.myshopify.com', 
-        locationID:'72572305558',
-        name:"elevee Egypt",
-        apiKey: process.env.VELVETME_API_KEY, 
-        password: process.env.VELVETME_API_PASSWORD, 
-        adminUrl: 'https://c596bc-b0.admin.shopify.com'
-    },
-    { 
-        domain: 'df0jfy-du.myshopify.com', 
-        locationID:'75050778712',
-        name:"Velvet Me Egypt",
-        apiKey: process.env.VELVETME_API_KEY, 
-        password: process.env.VELVETME_API_PASSWORD, 
-        adminUrl: 'https://df0jfy-du.myshopify.com'
-    },
-    { 
         domain: 'b10986-f4.myshopify.com', 
         locationID:'66852061268',
         name:"Orange Cow Jordan",
