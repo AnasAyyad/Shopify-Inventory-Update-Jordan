@@ -9,15 +9,15 @@ const stores = [
         name:"elevee Egypt",
         apiKey: process.env.ELEVEE_EG_API_KEY, 
         password: process.env.ELEVEE_EG_API_PASSWORD, 
-        adminUrl: 'https://c596bc-b0.admin.shopify.com'
+        adminUrl: 'https://c596bc-b0.myshopify.com'
     },
     { 
-        domain: 'df0jfy-du.myshopify.com', 
+        domain: 'df0jfy-du.myshopify.com',
         locationID:'75050778712',
         name:"Velvet Me Egypt",
         apiKey: process.env.VELVETME_EG_API_KEY, 
         password: process.env.VELVETME_EG_API_PASSWORD, 
-        adminUrl: 'https://df0jfy-du.admin.myshopify.com'
+        adminUrl: 'https://df0jfy-du.myshopify.com'
     },
 ];
 // Function to wait for a specific time (in milliseconds)
